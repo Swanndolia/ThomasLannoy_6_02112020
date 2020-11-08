@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
+const helmet = require('helmet');
+const session = require('express-session');
+
 mongoose
   .connect("mongodb+srv://Swanndolia:cdecdewsxT1@sopeckoko.gmam2.mongodb.net/piquante?retryWrites=true&w=majority", {
     useNewUrlParser: true,
@@ -18,7 +21,16 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
   next();
 });
+app.use(helmet());
+app.set('trust proxy', 1)
+app.use( session({
+   secret : 's3Cur3',
+   name : 'sessionId',
+   resave : false,
+   saveUninitialized : true,
 
+  })
+);
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", saucesRoutes);
