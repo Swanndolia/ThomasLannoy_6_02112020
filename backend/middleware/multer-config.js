@@ -1,5 +1,5 @@
 const multer = require('multer');
-
+//this let us decide which type of file we want to save here it's used to save pictures of sauces on the server 
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',

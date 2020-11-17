@@ -2,21 +2,14 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-function rot13(str) {
-  const input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  const output = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-  const index = (x) => input.indexOf(x);
-  const translate = (x) => (index(x) > -1 ? output[index(x)] : x);
-  return str.split("").map(translate).join("");
-}
-
+//function used to register on the server
 exports.signup = (req, res, next) => {
   emailBody = req.body.email.split("@");
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
-        email: rot13(emailBody[0]) + "@" + emailBody[1],
+        email: secureCrypt(emailBody[0]) + "@" + emailBody[1],
         password: hash,
       });
       user
@@ -27,9 +20,10 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+//function used to signin on the server
 exports.login = (req, res, next) => {
   emailBody = req.body.email.split("@");
-  User.findOne({ email: rot13(emailBody[0]) + "@" + emailBody[1] })
+  User.findOne({ email: secureCrypt(emailBody[0]) + "@" + emailBody[1] })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });

@@ -1,6 +1,6 @@
 const Sauce = require("../models/Sauce");
 const fs = require("fs");
-
+//method to create a sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -13,7 +13,7 @@ exports.createSauce = (req, res, next) => {
     .then(() => res.status(201).json({ message: "Sauce enregistrée !" }))
     .catch((error) => res.status(400).json({ error }));
 };
-
+//method to get a sauce
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
     _id: req.params.id,
@@ -28,6 +28,7 @@ exports.getOneSauce = (req, res, next) => {
     });
 };
 
+//method to modify a sauce
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
@@ -40,6 +41,7 @@ exports.modifySauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+//method to delete a sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
@@ -53,6 +55,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+//method to get all sauces
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((sauces) => {
@@ -65,6 +68,8 @@ exports.getAllSauces = (req, res, next) => {
     });
 };
 
+//method to like dislike or cancel vote about a sauce
+//edit frontend to remove possibility to like / dislike our own sauce ?
 exports.likeDislikeOrCancel = (req, res, next) => {
   Sauce.findOne({
     _id: req.params.id,

@@ -4,11 +4,12 @@ const mongoose = require("mongoose");
 const path = require("path");
 const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
-const helmet = require('helmet');
-const session = require('express-session');
+const helmet = require("helmet"); //for security (protect sql & xms injection disable some headers...)
+const session = require("express-session");
+require('./middleware/basic-security.js')();
 
 mongoose
-  .connect("mongodb+srv://Swanndolia:cdecdewsxT1@sopeckoko.gmam2.mongodb.net/piquante?retryWrites=true&w=majority", {
+  .connect(secureCrypt("zbatbqo+fei://Fjnaaqbyvn:pqrpqrjfkG1@fbcrpxbxb.tznz2.zbatbqo.arg/cvdhnagr?ergelJevgrf=gehr&j=znwbevgl"), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -22,13 +23,13 @@ app.use((req, res, next) => {
   next();
 });
 app.use(helmet());
-app.set('trust proxy', 1)
-app.use( session({
-   secret : 's3Cur3',
-   name : 'sessionId',
-   resave : false,
-   saveUninitialized : true,
-
+app.set("trust proxy", 1);
+app.use(
+  session({
+    secret: "s3Cur3",
+    name: "sessionId",
+    resave: false,
+    saveUninitialized: true,
   })
 );
 app.use(bodyParser.json());
