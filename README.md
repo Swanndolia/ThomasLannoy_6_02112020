@@ -12,3 +12,5 @@ go to the folder "<different_folder_name>" and run "npm install" then "npm insta
 Everything is now setup, to launch servers keep two terminals running
 The one in "<folder_name>" must run "nodemon server"
 The one in "<different_folder_name>" must run "ng serve"
+
+Then go to http://localhost:4200/
